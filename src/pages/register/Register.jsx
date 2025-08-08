@@ -158,13 +158,13 @@ import AuthContext from "@/context/AuthContext";
 import React, { useContext, useState } from "react";
 
 const Register = () => {
-  // Step 1: Create state variables for each input
+  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { createuser, googleSignIn } = useContext(AuthContext);
 
-  // Step 3: Form submit handler
+
   const handleSubmit = async (event) => {
     event.preventDefault(); // prevent page reload
     try {
@@ -174,10 +174,7 @@ const Register = () => {
       console.log(error);
     }
 
-    // Now you have access to name, email, and password
-    console.log("Form Data:", { name, email, password });
-
-    // You can do further actions here, like sending the data to an API
+    
   };
   const handleGoogleSignIn = async () => {
     try {
@@ -190,13 +187,13 @@ const Register = () => {
 
   return (
     <div>
-      {/* Step 2: Add onSubmit handler to form */}
+     
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           placeholder="Enter your name"
           value={name}
-          onChange={(e) => setName(e.target.value)} // update name state on input change
+          onChange={(e) => setName(e.target.value)} 
         />
         <input
           type="email"
