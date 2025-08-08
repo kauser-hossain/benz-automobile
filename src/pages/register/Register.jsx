@@ -169,7 +169,8 @@ const Register = () => {
     event.preventDefault(); // prevent page reload
     try {
       const result = await createuser(email, password);
-      console.log(result);
+      // console.log(result,"result by regiser")
+      
     } catch (error) {
       console.log(error);
     }
@@ -179,7 +180,7 @@ const Register = () => {
   const handleGoogleSignIn = async () => {
     try {
       const result = await googleSignIn();
-      console.log("Google SignIn:", result);
+      // console.log("Google SignInnnnnnnnnnnnnnnnnnn:", result);
     } catch (err) {
       console.error(err);
     }
