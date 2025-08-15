@@ -10,7 +10,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
-// import { email } from "zod";
+
 
 const Register = () => {
   const form = useForm({
@@ -22,8 +22,7 @@ const Register = () => {
       confirmPassword: "",
     },
   });
-  console.log(form);
-
+ 
   const onSubmit = (data) => {
     if (data.password !== data.confirmPassword) {
       form.setError("confirmPassword", {
