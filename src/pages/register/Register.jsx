@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+import React, { useContext } from "react";
 import {
   Form,
   FormControl,
@@ -10,19 +11,23 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
+import AuthContext from "@/context/AuthContext";
 
+import SocialLogin from "@/component/sociallogin/SocialLogin";
 
 const Register = () => {
+  const { createUser, updateProfileuser } = useContext(AuthContext);
+
   const form = useForm({
     mode: "onChange",
     defaultValues: {
-      name: "",
+      username: "",
       email: "",
       password: "",
       confirmPassword: "",
     },
   });
- 
+
   const onSubmit = (data) => {
     if (data.password !== data.confirmPassword) {
       form.setError("confirmPassword", {
@@ -31,9 +36,28 @@ const Register = () => {
       });
       return;
     }
-    alert("Registration successful!");
-    console.log(data);
-    form.reset();
+
+    createUser(data.email, data.password)
+      .then((result) => {
+        const loggedUser = result;
+        console.log(result);
+
+        updateProfileuser(data.username).then(() => {
+          const userInfo = {
+            name: data.username,
+            email: data.email,
+          };
+          fetch("http://localhost:5000/api/createuserRouter", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userInfo),
+          })
+            .then((res) => res.json())
+            .then((result) => console.log(result))
+            .catch((error) => console.log(error));
+        });
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -54,7 +78,11 @@ const Register = () => {
                 <FormItem className="mb-4">
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter username" {...field} />
+                    <Input
+                      placeholder="Enter username"
+                      autoComplete="username"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -76,7 +104,12 @@ const Register = () => {
                 <FormItem className="mb-4">
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input type="email" placeholder="Enter email" {...field} />
+                    <Input
+                      type="email"
+                      placeholder="Enter email"
+                      autoComplete="email"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -98,6 +131,7 @@ const Register = () => {
                     <Input
                       type="password"
                       placeholder="Enter password"
+                      autoComplete="new-password"
                       {...field}
                     />
                   </FormControl>
@@ -118,6 +152,7 @@ const Register = () => {
                     <Input
                       type="password"
                       placeholder="Confirm password"
+                      autoComplete="new-password"
                       {...field}
                     />
                   </FormControl>
@@ -131,88 +166,19 @@ const Register = () => {
             </Button>
           </form>
         </Form>
+
+        {/* Divider */}
+        <div className="flex items-center my-6">
+          <hr className="flex-grow border-gray-300 dark:border-gray-600" />
+          <span className="px-2 text-gray-500 text-sm">OR</span>
+          <hr className="flex-grow border-gray-300 dark:border-gray-600" />
+        </div>
+
+        {/* social login  */}
+        <SocialLogin />
       </div>
     </div>
   );
 };
 
 export default Register;
-// import { Button } from '@/components/ui/button';
-// import React from 'react';
-
-// const Register = () => {
-//     return (
-//         <div>
-//             <form>
-//                 <input  type="text" placeholder='enter your name' />
-//                 <input type="email" placeholder='enter your email' />
-//                 <input type="password" name="password" id="" />
-//                 <Button>register</Button>
-//             </form>
-//         </div>
-//     );
-// };
-
-// export default Register;
-// import { Button } from "@/components/ui/button";
-// import AuthContext from "@/context/AuthContext";
-// import React, { useContext, useState } from "react";
-
-// const Register = () => {
-
-//   const [name, setName] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const { createuser, googleSignIn } = useContext(AuthContext);
-
-//   const handleSubmit = async (event) => {
-//     event.preventDefault(); // prevent page reload
-//     try {
-//       const result = await createuser(email, password);
-//       // console.log(result,"result by regiser")
-
-//     } catch (error) {
-//       console.log(error);
-//     }
-
-//   };
-//   const handleGoogleSignIn = async () => {
-//     try {
-//       const result = await googleSignIn();
-//       // console.log("Google SignInnnnnnnnnnnnnnnnnnn:", result);
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   };
-
-//   return (
-//     <div>
-
-//       <form onSubmit={handleSubmit}>
-//         <input
-//           type="text"
-//           placeholder="Enter your name"
-//           value={name}
-//           onChange={(e) => setName(e.target.value)}
-//         />
-//         <input
-//           type="email"
-//           placeholder="Enter your email"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)} // update email state
-//         />
-//         <input
-//           type="password"
-//           placeholder="Enter your password"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)} // update password state
-//         />
-//         <Button type="submit">Register</Button>
-//       </form>
-//       <Button onClick={handleGoogleSignIn}>google</Button>
-//       <Button>github</Button>
-//     </div>
-//   );
-// };
-
-// export default Register;
