@@ -27,21 +27,42 @@ const AuthProviders = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
   const gogglesignin = () => {
+    setLoading(true)
     return signInWithPopup(auth, googleProvider);
   };
   const logout = () => {
+    setLoading(true)
     return signOut(auth);
   };
   const updateProfileuser = (name) => {
     return updateProfile(auth.currentUser, {
       displayName: name,
-      
     });
   };
+      
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("current user",currentUser)
+      
       setUser(currentUser);
+      if(currentUser){
+        const userInfo={email:currentUser.email}
+        fetch("http://localhost:5000/api/jwt",{
+          method:"POST",
+          headers:{ "Content-Type": "application/json" },
+          body:JSON.stringify(userInfo)
+        })
+        .then(res=>res.json())
+        .then(result=>{
+          if(result.token){
+            localStorage.setItem('access-token',result.token)
+            setLoading(false)
+          }else{
+            localStorage.removeItem("access-token")
+            setLoading(false)
+          }
+        }
+        ).catch(error=>console.log(error))
+      }
     });
     return () => {
       return unsubscribe();

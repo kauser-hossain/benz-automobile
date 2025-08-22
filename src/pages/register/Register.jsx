@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import AuthContext from "@/context/AuthContext";
 
 import SocialLogin from "@/component/sociallogin/SocialLogin";
+import { Link } from "react-router";
 
 const Register = () => {
   const { createUser, updateProfileuser } = useContext(AuthContext);
@@ -61,7 +62,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
+    <div className="min-h-screen flex items-center justify-center py-3 bg-gray-50 dark:bg-gray-900 px-4">
       <div className="max-w-md w-full bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6 text-center">
           Create an Account
@@ -176,6 +177,17 @@ const Register = () => {
 
         {/* social login  */}
         <SocialLogin />
+        <div className="mt-4 text-center">
+          <p className="text-gray-600 dark:text-gray-400 text-sm">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="text-blue-600 hover:underline font-medium"
+            >
+              Sign in
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

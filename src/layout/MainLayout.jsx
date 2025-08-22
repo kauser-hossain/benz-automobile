@@ -4,9 +4,9 @@ import { Outlet } from 'react-router';
 
 const MainLayout = () => {
     return (
-        <div>
+        <div className='bg-gray-50 dark:bg-gray-900'>
             <Navbar/>
-            <main>
+            <main >
                 <Outlet/>
             </main>
             <footer>
