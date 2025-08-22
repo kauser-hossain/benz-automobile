@@ -1,26 +1,31 @@
-import SocialLogin from '@/component/sociallogin/SocialLogin';
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import SocialLogin from "@/component/sociallogin/SocialLogin";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { Link } from "react-router";
 
 const Login = () => {
-    const form = useForm({
-        mode: "onChange",
-        defaultValues: {
-          username: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-        },
-      });
-      const onSubmit=(data)=>{
-        console.log(data)
-      }
-    return (
-       <div className="min-h-screen flex items-center justify-center py-3 bg-gray-50 dark:bg-gray-900 px-4">
+  const form = useForm({
+    mode: "onChange",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+  return (
+    <div className="min-h-screen flex items-center justify-center  bg-gray-50 dark:bg-gray-900 px-4">
       <div className="max-w-md w-full bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-6 text-center">
           Login your acount
@@ -28,8 +33,6 @@ const Login = () => {
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
-          
-
             {/* Email */}
             <FormField
               control={form.control}
@@ -81,8 +84,6 @@ const Login = () => {
               )}
             />
 
-           
-
             <Button type="submit" className="w-full">
               Login
             </Button>
@@ -111,7 +112,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default Login;
