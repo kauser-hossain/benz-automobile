@@ -11,7 +11,7 @@ const SocialLogin = () => {
   const handleGoggleSignin = () => {
     gogglesignin()
       .then((result) => {
-        console.log(result.user);
+        // console.log(result.user);
 
         const userInfo = {
           name: result.user.displayName,
@@ -24,8 +24,8 @@ const SocialLogin = () => {
         })
           .then((res) => res.json())
           .then(result=>{
-            console.log(result,"result")
-            navigate("/")
+            // console.log(result,"result")
+            // navigate("/")
           })
           .catch((error) => console.log(error));
       })

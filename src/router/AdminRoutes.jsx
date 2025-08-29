@@ -2,25 +2,34 @@ import React from "react";
 import { Navigate, Outlet, useLocation } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useAdmin from "../hooks/useAdmin";
+import AdminLayout from "@/layout/AdminLayout";
+
+// import React from "react";
+// import { Navigate, Outlet, useLocation } from "react-router-dom"; // ✅ from react-router-dom
+// import useAuth from "../hooks/useAuth";
+// import useAdmin from "../hooks/useAdmin";
 
 const AdminRoutes = () => {
   const { user, loading } = useAuth();
-  console.log(user);
-
-  const [isAdmin, isAdminLoading] = useAdmin();
+  const [rawIsAdmin, isAdminLoading] = useAdmin();
   const location = useLocation();
 
-  // Loading state
-  if (loading || isAdminLoading) {
-    return <div>Checking Admin Role...</div>;
+  // Normalize to boolean in case rawIsAdmin is an object
+  const isAdmin =
+    rawIsAdmin === true ||
+    rawIsAdmin?.isAdmin === true ||
+    rawIsAdmin?.admin === true ||
+    rawIsAdmin?.role === "admin";
+
+  if (loading || isAdminLoading) return <div>Checking Admin Role...</div>;
+
+  if (!user?.email) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // If admin → allow nested pages via Outlet
+  if (isAdmin) return <Outlet />;
 
-  if (user && isAdmin) return <Outlet />; // nested pages
-
-  // Not admin → redirect
-  return <Navigate to="/" state={{ from: location }} replace />;
+  return <Navigate to="/" replace />;
 };
 
 export default AdminRoutes;

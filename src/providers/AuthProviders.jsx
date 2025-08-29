@@ -39,6 +39,7 @@ const AuthProviders = ({ children }) => {
       displayName: name,
     });
   };
+  
       
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

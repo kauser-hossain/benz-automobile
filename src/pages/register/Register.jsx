@@ -17,7 +17,8 @@ import SocialLogin from "@/component/sociallogin/SocialLogin";
 import { Link } from "react-router";
 
 const Register = () => {
-  const { createUser, updateProfileuser } = useContext(AuthContext);
+  const { createUser, updateProfileuser,user } = useContext(AuthContext);
+// console.log(user.email,"userrr");
 
   const form = useForm({
     mode: "onChange",
